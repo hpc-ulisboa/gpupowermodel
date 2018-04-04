@@ -92,10 +92,11 @@
 
         The training_file.csv must have the following format:
 
-            line 1: number_freq_domains                              -> single value
-            line 2: list_default_freqs                               -> length(list_default_freqs) = number_freq_domains, values separated by commas
-            line 3: list_components                                  -> length(list_components) = number_freq_domains
-            line 4: Power_measure,list_freqs,list_utils_components   -> length(list_freqs) = number_freq_domains; length(list_utils_components) = sum(list_components)
+            line 1: number_freq_domains                                             -> single value
+            line 2: list_default_freqs                                              -> length(list_default_freqs) = number_freq_domains, values separated by commas
+            line 3: list_components                                                 -> length(list_components) = number_freq_domains
+            line 4: components_names                                                -> length(components_names) = sum(list_components)
+            line 5: Power_measure,list_freqs,list_utils_components                  -> length(list_freqs) = number_freq_domains; length(list_utils_components) = sum(list_components)
             ...
             ... (one line for each frequency configuration of each application to be used in the model estimation)
 
@@ -105,11 +106,12 @@
 
                 Considering the NVIDIA GTX Titan X used in [1], an example of the training_file.csv:
 
-                line 1: 2                                                           -> 2 frequency domains (C - core and M - mem)
-                line 2: 975,3505                                                    -> Fc_default = 975MHz, Fm_default = 3505MHz
-                line 3: 6,1                                                         -> 6 components in the core domain, 1 component in the memory domain
-                line 4: 225.2,1164,4005,0.65735,0.14174,0,0,0.11546,0,0.38509       -> P,Fc,Fm,Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0
-                line 5: 138.68,595,4005,0.65735,0.14174,0,0,0.11546,0,0.38509       -> P,Fc,Fm,Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0
+                line 1: 2                                                          -> 2 frequency domains (C - core and M - mem)
+                line 2: 975,3505                                                   -> Fc_default = 975MHz, Fm_default = 3505MHz
+                line 3: 6,1                                                        -> 6 components in the core domain, 1 component in the memory domain
+                line 4: SP,INT,DP,SF,L2,Shared,DRAM                                -> names of the modelled components
+                line 5: 225.2,1164,4005,0.65735,0.14174,0,0,0.11546,0,0.38509      -> P,Fc,Fm,Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0
+                line 6: 138.68,595,4005,0.65735,0.14174,0,0,0.11546,0,0.38509      -> P,Fc,Fm,Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0
                 ...
 
                 Note that in this particular case (GTX Titan X) we have:    Uc0=Util_sp_unit
@@ -135,12 +137,13 @@
             line 1: number_freq_domains                                                      -> single value
             line 2: list_default_freqs                                                       -> length(list_default_freqs) = number_freq_domains, values separated by commas
             line 3: list_components                                                          -> length(list_components) = number_freq_domains
-            line 4: list_freqs_domain_0                                                      -> length(list_freqs_domain_0) = number_freqs_domain_0
-            line 5: list_freqs_domain_1                                                      -> length(list_freqs_domain_1) = number_freqs_domain_1
-            line 6: list_parameters                                                          -> length(list_parameters) = 2*number_freq_domains + sum(list_components)
-            line 7: list_voltages_fmem_0                                                     -> length(list_voltages_fmem_0) = number_freqs_domain_0
+            line 4: components_names                                                         -> length(components_names) = sum(list_components)
+            line 5: list_freqs_domain_0                                                      -> length(list_freqs_domain_0) = number_freqs_domain_0
+            line 6: list_freqs_domain_1                                                      -> length(list_freqs_domain_1) = number_freqs_domain_1
+            line 7: list_parameters                                                          -> length(list_parameters) = 2*number_freq_domains + sum(list_components)
+            line 8: list_voltages_fmem_0                                                     -> length(list_voltages_fmem_0) = number_freqs_domain_0
             ...
-            line 7+(number_freqs_domain_1)-1: list_voltages_domain_(number_freqs_domain_1-1) -> length(list_voltages_domain_(number_freqs_domain_1-1)) = number_freqs_domain_0
+            line 8+(number_freqs_domain_1)-1: list_voltages_domain_(number_freqs_domain_1-1) -> length(list_voltages_domain_(number_freqs_domain_1-1)) = number_freqs_domain_0
 
         Note: The voltage values are relative to the voltage at the default frequency (see [1] for more details).
 
@@ -151,13 +154,14 @@
             line  1: 2                                                               -> 2 frequency domains (C - core and M - mem)
             line  2: 975,3505                                                        -> Fc_default = 975MHz, Fm_default = 3505MHz
             line  3: 6,1                                                             -> 6 components in the core domain, 1 component in the memory domain
-            line  4: 595,785,975,1164                                                -> 4 different core frequencies
-            line  5: 810,3300,3505,4005                                              -> 4 different memory frequencies
-            line  6: 24.44,0.0,0.015,0.012,0.056,0.048,0.028,0.126,0.069,0.041,0.015 -> Estimated parameters (beta0,beta1,beta2,beta3,omega0,omega1,omega2,omega3,omega4,omega5,omegam)
-            line  7: 0.90501225,0.9050168,1.0,1.0993801                              -> 4 voltage values for each core frequency at Fm = 810MHz
-            line  8: 1.0,1.0,1.0,1.1562239                                           -> 4 voltage values for each core frequency at Fm = 3300MHz
-            line  9: 0.97783136,0.99070895,1.0,1.1435305                             -> 4 voltage values for each core frequency at Fm = 3505MHz
-            line 10: 0.94551104,0.96700954,1.0,1.1404339                             -> 4 voltage values for each core frequency at Fm = 4005MHz
+            line  4: SP,INT,DP,SF,L2,Shared,DRAM                                      -> names of the modelled components
+            line  5: 595,785,975,1164                                                -> 4 different core frequencies
+            line  6: 810,3300,3505,4005                                              -> 4 different memory frequencies
+            line  7: 24.44,0.0,0.015,0.012,0.056,0.048,0.028,0.126,0.069,0.041,0.015 -> Estimated parameters (beta0,beta1,beta2,beta3,omega0,omega1,omega2,omega3,omega4,omega5,omegam)
+            line  8: 0.90501225,0.9050168,1.0,1.0993801                              -> 4 voltage values for each core frequency at Fm = 810MHz
+            line  9: 1.0,1.0,1.0,1.1562239                                           -> 4 voltage values for each core frequency at Fm = 3300MHz
+            line 10: 0.97783136,0.99070895,1.0,1.1435305                             -> 4 voltage values for each core frequency at Fm = 3505MHz
+            line 11: 0.94551104,0.96700954,1.0,1.1404339                             -> 4 voltage values for each core frequency at Fm = 4005MHz
 
     4.3 - Predictions File (REQUIRES: number_freq_domains=2)
 
@@ -172,8 +176,9 @@
             line 1: number_freq_domains                                                      -> single value
             line 2: list_default_freqs                                                       -> length(list_default_freqs) = number_freq_domains, values separated by commas
             line 3: list_components                                                          -> length(list_components) = number_freq_domains
-            line 4: list_utils_application_0                                                 -> length(list_utils_application_0) = sum(list_components)
-            line 5: list_utils_application_1                                                 -> length(list_utils_application_1) = sum(list_components)
+            line 4: components_names                                                         -> length(components_names) = sum(list_components)
+            line 5: application_name_0,list_utils_application_0                              -> length(list_utils_application_0) = sum(list_components)
+            line 6: application_name_1,list_utils_application_1                              -> length(list_utils_application_1) = sum(list_components)
             ...
             ... (one line for each different application)
 
@@ -184,15 +189,16 @@
 
             Considering the NVIDIA GTX Titan X used in [1], an example of the model_file.csv:
 
-            line 1: 2                                                               -> 2 frequency domains (C - core and M - mem)
-            line 2: 975,3505                                                        -> Fc_default = 975MHz, Fm_default = 3505MHz
-            line 3: 6,1                                                             -> 6 components in the core domain, 1 component in the memory domain
-            line 4: 0.0065652,0.046747,0,0,0.039836,0,0.10733                       -> Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0 (measured at Fc_default = 975MHz, Fm_default = 3505MHz)
-            line 5: 0.029646,0.1578,0.46532,0.13451,0.1052,0.03924,0.21002          -> Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0 (measured at Fc_default = 975MHz, Fm_default = 3505MHz)
-            line 6: 0.13084,0.18545,0,0.00017533,0.29286,0.76745,0.51052            -> Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0 (measured at Fc_default = 975MHz, Fm_default = 3505MHz)
-            line 7: 0.03251,0.034645,0,0,0.69131,0,0.13526                          -> Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0 (measured at Fc_default = 975MHz, Fm_default = 3505MHz)
+            line 1: 2                                                                   -> 2 frequency domains (C - core and M - mem)
+            line 2: 975,3505                                                            -> Fc_default = 975MHz, Fm_default = 3505MHz
+            line 3: 6,1                                                                 -> 6 components in the core domain, 1 component in the memory domain
+            line 4: SP,INT,DP,SF,L2,Shared,DRAM                                         -> names of the modelled components
+            line 5: streamcluster,0.0065652,0.046747,0,0,0.039836,0,0.10733             -> bench_name,Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0 (measured at Fc_default = 975MHz, Fm_default = 3505MHz)
+            line 6: backprop,0.029646,0.1578,0.46532,0.13451,0.1052,0.03924,0.21002     -> bench_name,Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0 (measured at Fc_default = 975MHz, Fm_default = 3505MHz)
+            line 7: lud,0.13084,0.18545,0,0.00017533,0.29286,0.76745,0.51052            -> bench_name,Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0 (measured at Fc_default = 975MHz, Fm_default = 3505MHz)
+            line 8: 2mm,0.03251,0.034645,0,0,0.69131,0,0.13526                          -> bench_name,Uc0,Uc1,Uc2,Uc3,Uc4,Uc5,Um0 (measured at Fc_default = 975MHz, Fm_default = 3505MHz)
             ...
-            (Each line from line 4 forward corresponds to a different application, with utilizations are measured at the
+            (Each line from line 5 forward corresponds to a different application, with utilizations are measured at the
             default frequency configuration)
 
             Again in this particular case (GTX Titan X) we have:    Uc0=Util_sp_unit
