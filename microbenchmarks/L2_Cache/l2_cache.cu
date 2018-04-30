@@ -26,29 +26,32 @@ do {                                                                           \
 #define ALIGN_BUFFER(buffer, align)                                            \
   (((uintptr_t) (buffer) & ((align)-1)) ? ((buffer) + (align) - ((uintptr_t) (buffer) & ((align)-1))) : (buffer))
 
-#define COMP_ITERATIONS (2048)
-#define KERNEL_CALLS (1)
-
 #define THREADS (1024)
-#define BLOCKS (32768)
-#define N (10)
+#define BLOCKS (3276)
+#define N 10
+
+#define KERNEL_CALLS 1
+#define COMP_ITERATIONS 512
+#define UNROLL_ITERATIONS 32
 
 #define REGBLOCK_SIZE (4)
-#define UNROLL_ITERATIONS (32)
 #define deviceNum (0)
-#define STRIDE (64*1024)
 
-template <class T> __global__ void benchmark (T* cdin, T* cdout, int inner_iterations){
 
-	const int ite = blockIdx.x * THREADS + threadIdx.x;
+template <class T> __global__ void benchmark (T* cdin, T* cdout, int inner_reps, int unrolls){
+
+	#ifdef OFFSET
+		const int ite = blockIdx.x%4 * THREADS + threadIdx.x;
+	#else
+		const int ite = blockIdx.x * THREADS + threadIdx.x;
+	#endif
 	T r0;
-
 	for (int k=0; k<N;k++){
-		for(int j=0; j<inner_iterations; j+=UNROLL_ITERATIONS){
+		for(int j=0; j<inner_reps; j+=unrolls){
 			#pragma unroll
-			for(int i=0; i<UNROLL_ITERATIONS; i++){
-				r0 = cdin[ite+STRIDE*i];
-				cdout[ite+STRIDE*i]=r0;
+			for(int i=0; i<unrolls; i++){
+				r0 = cdin[ite];
+				cdout[ite]=r0;
 			}
 		}
 	}
@@ -72,7 +75,7 @@ float finalizeEvents(cudaEvent_t start, cudaEvent_t stop){
 	return kernel_time;
 }
 
-void runbench(double* kernel_time, double* bandw,double* cdin,double* cdout, int compute_iters){
+void runbench(double* kernel_time, double* bandw,double* cdin,double* cdout, int compute_iters, int unrolls){
 
 	cudaEvent_t start, stop;
 	initializeEvents(&start, &stop);
@@ -81,10 +84,10 @@ void runbench(double* kernel_time, double* bandw,double* cdin,double* cdout, int
     int type = DATA_TYPE;
 
     CUDA_SAFE_CALL( cudaGetLastError() );
-	if (type==0){
-		benchmark<float><<< dimGrid, dimBlock >>>((float*)cdin,(float*)cdout, compute_iters);
+    if (type==0){
+		benchmark<float><<< dimGrid, dimBlock >>>((float*)cdin,(float*)cdout, compute_iters, unrolls);
 	}else{
-		benchmark<double><<< dimGrid, dimBlock >>>(cdin, cdout, compute_iters);
+		benchmark<double><<< dimGrid, dimBlock >>>(cdin,cdout, compute_iters, unrolls);
 	}
     CUDA_SAFE_CALL( cudaGetLastError() );
 
@@ -108,19 +111,18 @@ int main(int argc, char *argv[]){
 	int deviceCount;
 	char deviceName[32];
 
-    int kernel_calls=KERNEL_CALLS, compute_iters=COMP_ITERATIONS;
+    int kernel_calls=KERNEL_CALLS, compute_iters=COMP_ITERATIONS, unrolls=UNROLL_ITERATIONS;
 	cudaDeviceProp deviceProp;
 
-    if (argc > 3 || argc == 2) {
+    if (argc != 4) {
         printf("\nError: Wrong number of arguments.\n\n");
-        printf("Usage:\n\t %s [inner_iterations] [kernel_calls]\n\t %s\n", argv[0], argv[0]);
+        printf("Usage:\n\t %s [inner_iterations] [kernel_calls] [unrolls]\n\t %s\n", argv[0], argv[0]);
 
         return -1;
-    }
-
-    if (argc == 3) {
-        kernel_calls = atoi(argv[2]);
-        compute_iters = atoi(argv[1]);
+    } else  {
+        compute_iters = atoi(argv[argc-3]);
+        kernel_calls = atoi(argv[argc-2]);
+        unrolls = atoi(argv[argc-1]);
     }
 
     printf("Number of kernel launches: %d\n", kernel_calls);
@@ -129,7 +131,7 @@ int main(int argc, char *argv[]){
 	CUDA_SAFE_CALL(cudaSetDevice(deviceNum));
 	double time[kernel_calls][2],value[kernel_calls][4];
 
-	int size = (THREADS*BLOCKS+STRIDE*UNROLL_ITERATIONS)*sizeof(double);
+	int size = (THREADS*BLOCKS)*sizeof(double);
 	size_t freeCUDAMem, totalCUDAMem;
 	CUDA_SAFE_CALL(cudaMemGetInfo(&freeCUDAMem, &totalCUDAMem));
 	printf("Total GPU memory %lu, free %lu\n", totalCUDAMem, freeCUDAMem);
@@ -163,7 +165,7 @@ int main(int argc, char *argv[]){
 	int i;
 
     for (i=0;i<kernel_calls;i++){
-		runbench(&time[0][0],&value[0][0],cdin,cdout,compute_iters);
+		runbench(&time[0][0],&value[0][0],cdin,cdout,compute_iters, unrolls);
 
         printf("Registered time: %f ms\n",time[0][0]);
     }
