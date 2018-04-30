@@ -16,7 +16,7 @@ class cd:
     def __exit__(self, etype, value, traceback):
         os.chdir(self.savedPath)
 
-arch = '61'
+arch = '52'
 
 print '\nCompiling microbenchmarks for arch=sm_{}.'.format(arch)
 
