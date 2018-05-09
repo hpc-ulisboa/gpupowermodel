@@ -1,4 +1,42 @@
 #!/usr/bin/python2
+# coding=utf-8
+# Copyright (c) 2018  INESC-ID, Instituto Superior Técnico, Universidade de Lisboa
+#
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+#
+# 3. Neither the name of the copyright holder nor the names of its contributors
+#    may be used to endorse or promote products derived from this software
+#    without specific prior written permission.
+#
+# 4. The use of this tool in research works and publications, assumes that
+#    the following articles are cited:
+#
+# Original gpmTOOL:
+#  -  João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. GPGPU Power Modelling
+#     for Multi-Domain Voltage-Frequency Scaling. 24th IEEE International Symposium on
+#     High-Performance Computing Architecture (HPCA), 2018.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 # TESTED USING PYTHON 2.7
 import os.path
 import sys
@@ -380,6 +418,7 @@ if (program_mode == 1):
     idx_other_freq = np.zeros(num_freq_domains, dtype=np.int32)
     idx_training_freqs = [None]*num_freq_domains
     read_freqs = [None]*num_freq_domains
+    num_training_freqs=1
     for domain_id in range(0, num_freq_domains):
         idx_training_freqs[domain_id]=[]
         read_freqs[domain_id] = np.unique(F[:,domain_id])
@@ -388,31 +427,44 @@ if (program_mode == 1):
 
         if (idx_default_freq < len(read_freqs[domain_id])-1):
             idx_other_freq = idx_default_freq+1
+            idx_training_freqs[domain_id].append(idx_other_freq)
+            num_training_freqs+=1
         elif (idx_default_freq > 0):
             idx_other_freq = idx_default_freq-1
+            idx_training_freqs[domain_id].append(idx_other_freq)
+            num_training_freqs+=1
         else:
-            print "ERROR: Not enough frequencies on domain {} to train the model".format(domain_id)
-            sys.exit()
+            # print "ERROR: Not enough frequencies on domain {} to train the model".format(domain_id)
+            print "Warning: Only one frequency was read on domain {} to train the model".format(domain_id)
+            # sys.exit()
 
-        idx_training_freqs[domain_id].append(idx_other_freq)
 
     # print (read_freqs)
-    # if (verbose == 1):
-    #     print "Index training configs:\n{}".format(idx_training_freqs)
+    if (verbose == 1):
+        print "Index training configs:\n{}".format(idx_training_freqs)
 
-    training_configs =  [None]*(num_freq_domains+1)
+    training_configs =  [None]*(num_training_freqs)
     training_configs[0] = []
     for domain_id in range(0, num_freq_domains):
         training_configs[0].append(read_freqs[domain_id][idx_training_freqs[domain_id][0]])
 
-    for config_id in range(0, num_freq_domains):
-        training_configs[config_id+1] = []
-        for freq_id in range(0, num_freq_domains):
-            if (freq_id == config_id):
+    # print training_configs
+    # print len(idx_training_freqs[0])
+    # sys.exit()
+
+    for config_id in range(1, num_training_freqs):
+        training_configs[config_id] = []
+        for freq_id in range(0, len(idx_training_freqs[config_id-1])):
+            # if (len(idx_training_freqs[freq_id])>1):
+            if (freq_id == config_id-1):
                 # print "{},{},{}".format(freq_id, idx_training_freqs[freq_id], idx_training_freqs[freq_id][1])
-                training_configs[config_id+1].append(read_freqs[freq_id][idx_training_freqs[freq_id][1]])
+                training_configs[config_id].append(read_freqs[freq_id][idx_training_freqs[freq_id][1]])
             else:
-                training_configs[config_id+1].append(read_freqs[freq_id][idx_training_freqs[freq_id][0]])
+                training_configs[config_id].append(read_freqs[freq_id][idx_training_freqs[freq_id][0]])
+
+
+    # print training_configs
+    # sys.exit()
 
     if (verbose == 1):
         print "\nInitial training configurations:"
@@ -449,10 +501,14 @@ if (program_mode == 1):
 
     B, rnorm = nnls(np.vstack(X_model_begin), P_model_begin)
 
+
+    B = 0.05*np.ones((4+num_components_domains[0]+num_components_domains[1]), dtype=np.float32)
+
     if (verbose == 1):
         print "\nInitial coefficient values:"
         printBCoefficients(B, num_freq_domains, num_components_domains, names_components, 1)
 
+    # sys.exit()
     # find the different possible frequency configurations (possible combinations of frequencies from each dommain)
     if (num_freq_domains == 2):
         different_F_pairs = cartesian(read_freqs)
@@ -518,7 +574,7 @@ if (program_mode == 1):
                         X_model_All_V[array_id][0] = B[0]
                         X_model_All_V[array_id][1] = F[data_idx][0] * (B[2] + np.sum(B[4:(4+nc1)]*(U[data_idx][0:nc1])))
 
-                        X_model_All_V[array_id][2] = B[1] + (F[data_idx][1] * (B[3] + B[4+nc1:4+nc1+nc2]*(U[data_idx][nc1:nc1+nc2])))
+                        X_model_All_V[array_id][2] = B[1] + (F[data_idx][1] * (B[3] +  np.sum(B[4+nc1:4+nc1+nc2]*(U[data_idx][nc1:nc1+nc2]))))
 
                         P_model[array_id] = P[data_idx]
 
@@ -528,7 +584,7 @@ if (program_mode == 1):
 
                     #boundaries of the voltage for the model determination
                     if (np.where(read_freqs[0]==config[0])[0][0] == 0):
-                        lb = 0
+                        lb = 0.5
                     else:
                         lb = V_main[np.where(read_freqs[1]==config[1])[0][0]][(np.where(read_freqs[0]==config[0])[0][0])-1]
 
@@ -869,7 +925,7 @@ else:
     cm = plt.get_cmap('gist_rainbow')
 
     if (total_num_utils+2 < 20):
-        colors = tableau20[::2]
+        colors = tableau20
     else:
         colors = [cm(1.*i/(total_num_utils+2)) for i in range((total_num_utils+2))]
 
