@@ -1,89 +1,48 @@
-***********************************************************************************
-*                                                                                 *
-*                      gpmTOOL - GPU Power Modelling Tool                         *
-*                                                                                 *
-***********************************************************************************
+# gpmTOOL - GPU Power Modelling Tool
 
-1 - README
+## 1. DESCRIPTION
+    gpmTOOL is a command line tool for modelling the power consumption of a GPU device. The tool implements the iterative heuristic algorithm proposed in [1] and presented in [HPCA'2018](https://youtu.be/ppsPx6zaC0U), to determine the unknown characteristics of GPU devices in order to estimate the GPU power consumption across an ample range of frequency and voltage configurations for the multiple GPU frequency domains.
 
-    gpmTOOL is a command line tool for modelling the power consumption of
-    a GPU device. The tool implements the iterative heuristic algorithm proposed in
-    [1] (https://youtu.be/ppsPx6zaC0U), to determine the unknown characteristics of
-    GPU devices in order to estimate the GPU power consumption across an ample range of
-    frequency and voltage configurations for the multiple GPU frequency domains.
-
-    By providing an input file with details of the execution of different applications
-    on a specific GPU device, the tool is able to model the characteristics of the
-    different architecture components. The tool can also estimate how the cores voltage
-    scales with their frequency. From the resulting model it is possible to estimate
-    the power consumption of any new application for different frequency configurations,
-    by providing the utilization of the modelled GPU components.
+    By providing an input file with details of the execution of different applications on a specific GPU device, the tool is able to model the characteristics of the different architecture components. The tool can also estimate how the cores voltage scales with their frequency. From the resulting model it is possible to estimate the power consumption of any new application for different frequency configurations, by providing the utilization of the modelled GPU components.
 
     To get more information of how to install or use it, you should keep reading this file.
 
-    Also, if you use the gpmTOOL tool in a publication, please cite:
+## 2. CONTACT
 
-    [1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. GPGPU Power Modelling
-        for Multi-Domain Voltage-Frequency Scaling. 24th IEEE International Symposium on
-        High-Performance Computing Architecture (HPCA), 2018.
+    If you have problems, questions, ideas or suggestions, please contact us by e-mail at joao.guerreiro@inesc-id.pt .
 
-2 - CONTACT
+## 3. USAGE
 
-    If you have problems, questions, ideas or suggestions, please contact us by
-    e-mail at joao.guerreiro@inesc-id.pt .
-
-3 - USAGE
-
-  Usage:
+  * Usage:
     gpmTOOL -t training_file.csv [-o model_file.csv] [-v]
     gpmTOOL -p model_file.csv predictions_file.csv [-v]
     gpmTOOL -u
 
-  Options:
+  * Options:
 
-    -t : file with the measurements data points used to estimate the model parameters
-         (eg. from microbenchmarks).
+    -t : file with the measurements data points used to estimate the model parameters (eg. from microbenchmarks).
 
-    -o : if provided, the determined model parameters and voltage values are saved in an
-         output file model_file.csv.
-         ONLY SUPPORTED WHEN NUMBER OF FREQUENCY DOMAINS IS 2.
+    -o : if provided, the determined model parameters and voltage values are saved in an output file model_file.csv. ONLY SUPPORTED WHEN NUMBER OF FREQUENCY DOMAINS IS 2.
 
-    -p : the model provided in the model_file.csv is used to compute the power predictions
-         for the applications provided in the predictions_file.csv.
-         ONLY SUPPORTED WHEN NUMBER OF FREQUENCY DOMAINS IS 2.
+    -p : the model provided in the model_file.csv is used to compute the power predictions for the applications provided in the predictions_file.csv. ONLY SUPPORTED WHEN NUMBER OF FREQUENCY DOMAINS IS 2.
 
     -v : verbose mode.
 
     -u : shows 'USAGE' section of this file
 
-4 - INPUT FILES
+## 4. INPUT FILES
 
-    As proposed in [1], in order to estimate the power consumption model of a GPU device,
-    i.e., to estimate the power consumption model, it is required to have information on
-    the execution of different applications (eg. microbenchmarks) on the considered GPU
-    device. During the execution of these applications, it is necessary to obtain both the
-    power consumption at each tested frequency configuration, as well as the utilization
-    of the different GPU components to be modeled (please see 5 - POWER INFORMATION and
-    6 - GPU COMPONENTS UTILIZATON for more details on how to obtain these values).
+    As proposed in [1], in order to estimate the power consumption model of a GPU device, i.e., to estimate the power consumption model, it is required to have information on the execution of different applications (eg. microbenchmarks) on the considered GPU device. During the execution of these applications, it is necessary to obtain both the power consumption at each tested frequency configuration, as well as the utilization of the different GPU components to be modeled (please see 5 - POWER INFORMATION and 6 - GPU COMPONENTS UTILIZATON for more details on how to obtain these values).
 
-    Once these values are measured, they can be aggregated in a file (4.1 - Training File),
-    which can then be provided to the gpmTOOL in order to estimate the GPU power consumption
-    model.
+    Once these values are measured, they can be aggregated in a file (4.1 - Training File), which can then be provided to the gpmTOOL in order to estimate the GPU power consumption model.
 
-    FOR CASES WHEN THE NUMBER OF FREQUENCY DOMAINS IS EQUAL TO 2, if desired, once the model
-    is estimated it is possible to save the determined values into an output file (4.2 - Model
-    File), which will contain both the estimated model parameters as well as the determined
-    voltage values associated with each Frequency configuration.
+    FOR CASES WHEN THE NUMBER OF FREQUENCY DOMAINS IS EQUAL TO 2, if desired, once the model is estimated it is possible to save the determined values into an output file (4.2 - Model File), which will contain both the estimated model parameters as well as the determined voltage values associated with each Frequency configuration.
 
-    Finally, it is also possible to use a previously estimated model to predict the power
-    consumption of new (unseen) applications (ALSO REQUIRES NUMBER OF FREQUENCY DOMAINS EQUAL
-    TO 2). For this, the tool must be provided both the previously created model file, as well
-    as a file with the GPU components utilization for each of the desired GPU applications (4.3 -
-    - Predictions File).
+    Finally, it is also possible to use a previously estimated model to predict the power consumption of new (unseen) applications (ALSO REQUIRES NUMBER OF FREQUENCY DOMAINS EQUAL TO 2). For this, the tool must be provided both the previously created model file, as well as a file with the GPU components utilization for each of the desired GPU applications (4.3 - Predictions File).
 
     All files are in .csv format, i.e. in each line the different values are separated by commas.
 
-    4.1 - Training File
+### 4.1. Training File
 
         The training_file.csv must contain, at the beginning of the file, information relative to
         the GPU device, which will determine the basic structure of the model to be estimated
