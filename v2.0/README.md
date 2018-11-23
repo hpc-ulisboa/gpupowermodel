@@ -1,4 +1,4 @@
-# gpmTOOL v1.0 - GPU  Power Modelling Tool
+# gpmTOOL v2.0 - GPU  Power Modelling Tool
 
 
 ## 1. Description
