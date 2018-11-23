@@ -187,8 +187,8 @@ To use the estimated model to predict the power consumptions of the real benchma
 
 [1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. GPGPU Power Modelling for Multi-Domain Voltage-Frequency Scaling. 24th IEEE International Symposium on High-Performance Computing Architecture (HPCA), 2018.
 
-[2] [NVIDIA. NVML API Reference Guide, vR384, 2017](#http://docs.nvidia.com/deploy/pdf/NVML_API_Reference_Guide.pdf)
+[2] [NVIDIA. NVML API Reference Guide, vR384, 2017](http://docs.nvidia.com/deploy/pdf/NVML_API_Reference_Guide.pdf)
 
-[3] [gpowerSAMPLER, Power sampling tool](#http://github.com/hpc-ulisboa/gpowerSAMPLER)
+[3] [gpowerSAMPLER, Power sampling tool](http://github.com/hpc-ulisboa/gpowerSAMPLER)
 
-[4] [NVIDIA. NVIDIA CUPTI Users Guide, v9.1.85, 2017](#http://docs.nvidia.com/cuda/pdf/CUPTI_Library.pdf)
+[4] [NVIDIA. NVIDIA CUPTI Users Guide, v9.1.85, 2017](http://docs.nvidia.com/cuda/pdf/CUPTI_Library.pdf)

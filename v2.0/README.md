@@ -193,14 +193,15 @@ In the example_files/ are provided examples of the input files (training, model 
 ``./gpmTOOL -t example_files/micro_gtxtitanx.csv -o model_gtxtitanx.csv``
 
 To use the estimated model to predict the power consumptions of the real benchmarks applications considered in the file real_maxwell.csv, use the following command:
+
 ``./gpmTOOL -p model_gtxtitanx.csv example_files/real_gtxtitanx.csv``
 
 ## References
 
 [1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. GPGPU Power Modelling for Multi-Domain Voltage-Frequency Scaling. 24th IEEE International Symposium on High-Performance Computing Architecture (HPCA), 2018.
 
-[2] [NVIDIA. NVML API Reference Guide, vR384, 2017](#http://docs.nvidia.com/deploy/pdf/NVML_API_Reference_Guide.pdf)
+[2] [NVIDIA. NVML API Reference Guide, vR384, 2017](http://docs.nvidia.com/deploy/pdf/NVML_API_Reference_Guide.pdf)
 
-[3] [gpowerSAMPLER, Power sampling tool](#http://github.com/hpc-ulisboa/gpowerSAMPLER)
+[3] [gpowerSAMPLER, Power sampling tool](http://github.com/hpc-ulisboa/gpowerSAMPLER)
 
-[4] [NVIDIA. NVIDIA CUPTI Users Guide, v9.1.85, 2017](#http://docs.nvidia.com/cuda/pdf/CUPTI_Library.pdf)
+[4] [NVIDIA. NVIDIA CUPTI Users Guide, v9.1.85, 2017](http://docs.nvidia.com/cuda/pdf/CUPTI_Library.pdf)
