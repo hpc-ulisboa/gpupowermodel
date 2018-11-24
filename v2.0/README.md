@@ -3,14 +3,14 @@
 
 ## 1. Description
 
-gpmTOOL is a command line tool for modelling the power consumption of
+``gpmTOOL`` is a command line tool for modelling the power consumption of
 a GPU device. The tool implements the iterative heuristic algorithm proposed in [1] and presented in [HPCA'2018](https://youtu.be/ppsPx6zaC0U), to determine the unknown characteristics of GPU devices in order to estimate the GPU power consumption across an ample range of frequency and voltage configurations for the multiple GPU frequency domains.
 
 By providing an input file with details of the execution of different applications on a specific GPU device, the tool is able to model the characteristics of the different architecture components. The tool can also estimate how the cores voltage scales with their frequency. From the resulting model it is possible to estimate the power consumption of any new application for different frequency configurations, by providing the utilization of the modelled GPU components.
 
 To get more information of how to install or use it, you should keep reading this file.
 
-Also, if you use the gpmTOOL tool in a publication, please cite [1].
+Also, if you use the ``gpmTOOL`` tool in a publication, please cite [1].
 
 ## 2. Contact
 
@@ -43,7 +43,7 @@ gpmTOOL -u
 As proposed in [1], in order to estimate the power consumption model of a GPU device, i.e., to estimate the power consumption model, it is required to have information on the execution of different applications (eg. microbenchmarks) on the considered GPU device. During the execution of these applications, it is necessary to obtain both the power consumption at each tested frequency configuration, as well as the utilization of the different GPU components to be modeled (please see [5. Power Information](#5-power-information) and
 [6. GPU Components Utilization](#6-gpu-components-utilization) for more details on how to obtain these values).
 
-Once these values are measured, they can be aggregated in a file ([4.1. Training File](#41-training-file)), which can then be provided to the **gpmTOOL** in order to estimate the GPU power consumption model.
+Once these values are measured, they can be aggregated in a file ([4.1. Training File](#41-training-file)), which can then be provided to the ``gpmTOOL`` in order to estimate the GPU power consumption model.
 
 FOR CASES WHEN THE NUMBER OF FREQUENCY DOMAINS IS EQUAL TO 2, if desired, once the model is estimated it is possible to save the determined values into an output file ([4.2. Model File](#42-model-file)), which will contain both the estimated model parameters as well as the determined voltage values associated with each Frequency configuration.
 
