@@ -198,7 +198,7 @@ To use the estimated model to predict the power consumptions of the real benchma
 
 ## References
 
-[1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. GPGPU Power Modelling for Multi-Domain Voltage-Frequency Scaling. 24th IEEE International Symposium on High-Performance Computing Architecture (HPCA), 2018.
+[1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás.[GPGPU Power Modelling for Multi-Domain Voltage-Frequency Scaling](https://ieeexplore.ieee.org/abstract/document/8327055). 24th IEEE International Symposium on High-Performance Computing Architecture (HPCA), 2018.
 
 [2] [NVIDIA. NVML API Reference Guide, vR384, 2017](http://docs.nvidia.com/deploy/pdf/NVML_API_Reference_Guide.pdf)
 

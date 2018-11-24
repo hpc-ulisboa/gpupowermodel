@@ -23,7 +23,7 @@ If you have problems, questions, ideas or suggestions, please contact us by e-ma
 
 ## 4. REFERENCES
 
-[1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. GPGPU Power Modelling for Multi-Domain Voltage-Frequency Scaling. 24th IEEE International Symposium on High-Performance Computing Architecture (HPCA), 2018.
+[1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. [GPGPU Power Modelling for Multi-Domain Voltage-Frequency Scaling](https://ieeexplore.ieee.org/abstract/document/8327055). 24th IEEE International Symposium on High-Performance Computing Architecture (HPCA), 2018.
 
 <br/>
 
