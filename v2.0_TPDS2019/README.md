@@ -4,13 +4,13 @@
 ## 1. Description
 
 ``gpmTOOL`` is a command line tool for modelling the power consumption of
-a GPU device. The tool implements the iterative heuristic algorithm proposed in [1] and presented in [HPCA'2018](https://youtu.be/ppsPx6zaC0U), to determine the unknown characteristics of GPU devices in order to estimate the GPU power consumption across an ample range of frequency and voltage configurations for the multiple GPU frequency domains.
+a GPU device. The tool implements the iterative heuristic algorithm proposed in [1] and [2], initially presented in [HPCA'2018](https://youtu.be/ppsPx6zaC0U), to determine the unknown characteristics of GPU devices in order to estimate the GPU power consumption across an ample range of frequency and voltage configurations for the multiple GPU frequency domains.
 
 By providing an input file with details of the execution of different applications on a specific GPU device, the tool is able to model the characteristics of the different architecture components. The tool can also estimate how the cores voltage scales with their frequency. From the resulting model it is possible to estimate the power consumption of any new application for different frequency configurations, by providing the utilization of the modelled GPU components.
 
 To get more information of how to install or use it, you should keep reading this file.
 
-Also, if you use the ``gpmTOOL`` tool in a publication, please cite [1].
+Also, if you use the ``gpmTOOL`` tool in a publication, please cite [1] and [2].
 
 ## 2. Contact
 
@@ -178,13 +178,13 @@ Again in this particular case (GTX Titan X) we have:
 
 ## 5. Power Information
 
-In NVIDIA GPU devices power samples can be obtained using the nvmlDeviceGetPowerUsage() function from the NVIDIA NVML library [2], which retrieves information from the Power sensor contained in some NVIDIA GPU devices.
+In NVIDIA GPU devices power samples can be obtained using the nvmlDeviceGetPowerUsage() function from the NVIDIA NVML library [3], which retrieves information from the Power sensor contained in some NVIDIA GPU devices.
 
-We also provide a tool that uses this library to measure the power consumption of GPU applications [3].
+We also provide a tool that uses this library to measure the power consumption of GPU applications [4].
 
 ## 6. GPU Components Utilization
 
-In NVIDIA GPU devices, performance counters can be obtained during kernels execution using the CUPTI library [4]. Please see [1] for more details on what counter values should be measured and how to compute the corresponding component utilizations.
+In NVIDIA GPU devices, performance counters can be obtained during kernels execution using the CUPTI library [5]. Please see [1] for more details on what counter values should be measured and how to compute the corresponding component utilizations.
 
 ## 7. Example
 
@@ -200,8 +200,10 @@ To use the estimated model to predict the power consumptions of the real benchma
 
 [1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás.[GPGPU Power Modelling for Multi-Domain Voltage-Frequency Scaling](https://ieeexplore.ieee.org/abstract/document/8327055). 24th IEEE International Symposium on High-Performance Computing Architecture (HPCA), 2018.
 
-[2] [NVIDIA. NVML API Reference Guide, vR384, 2017](http://docs.nvidia.com/deploy/pdf/NVML_API_Reference_Guide.pdf)
+[2] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás.[Modeling and Decoupling the GPU Power Consumption for Cross-Domain DVFS](https://ieeexplore.ieee.org/abstract/document/8716300/).  IEEE Transactions on Parallel and Distributed Systems (TPDS), 2019.
 
-[3] [gpowerSAMPLER, Power sampling tool](http://github.com/hpc-ulisboa/gpowerSAMPLER)
+[3] [NVIDIA. NVML API Reference Guide, vR384, 2017](http://docs.nvidia.com/deploy/pdf/NVML_API_Reference_Guide.pdf)
 
-[4] [NVIDIA. NVIDIA CUPTI Users Guide, v9.1.85, 2017](http://docs.nvidia.com/cuda/pdf/CUPTI_Library.pdf)
+[4] [gpowerSAMPLER, Power sampling tool](http://github.com/hpc-ulisboa/gpowerSAMPLER)
+
+[5] [NVIDIA. NVIDIA CUPTI Users Guide, v9.1.85, 2017](http://docs.nvidia.com/cuda/pdf/CUPTI_Library.pdf)
