@@ -8,6 +8,8 @@ By providing an input file with details of the execution of different applicatio
 
 To get more information of how to install or use it, you should keep reading this file.
 
+If you use the ``gpmTOOL`` tool in a publication, please cite [1] and [2].
+
 <br/>
 
 ## 2. CONTACT
@@ -25,7 +27,7 @@ If you have problems, questions, ideas or suggestions, please contact us by e-ma
 
 [1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. [GPGPU Power Modelling for Multi-Domain Voltage-Frequency Scaling](https://ieeexplore.ieee.org/abstract/document/8327055). 24th IEEE International Symposium on High-Performance Computing Architecture (HPCA), 2018.
 
-[2] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás.[Modeling and Decoupling the GPU Power Consumption for Cross-Domain DVFS](https://ieeexplore.ieee.org/abstract/document/8716300/).  IEEE Transactions on Parallel and Distributed Systems (TPDS), 2019.
+[2] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. [Modeling and Decoupling the GPU Power Consumption for Cross-Domain DVFS](https://ieeexplore.ieee.org/abstract/document/8716300/).  IEEE Transactions on Parallel and Distributed Systems (TPDS), 2019.
 
 <br/>
 

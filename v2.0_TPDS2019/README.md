@@ -10,7 +10,7 @@ By providing an input file with details of the execution of different applicatio
 
 To get more information of how to install or use it, you should keep reading this file.
 
-Also, if you use the ``gpmTOOL`` tool in a publication, please cite [1] and [2].
+If you use the ``gpmTOOL`` tool in a publication, please cite [1] and [2].
 
 ## 2. Contact
 
@@ -198,9 +198,9 @@ To use the estimated model to predict the power consumptions of the real benchma
 
 ## References
 
-[1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás.[GPGPU Power Modelling for Multi-Domain Voltage-Frequency Scaling](https://ieeexplore.ieee.org/abstract/document/8327055). 24th IEEE International Symposium on High-Performance Computing Architecture (HPCA), 2018.
+[1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. [GPGPU Power Modelling for Multi-Domain Voltage-Frequency Scaling](https://ieeexplore.ieee.org/abstract/document/8327055). 24th IEEE International Symposium on High-Performance Computing Architecture (HPCA), 2018.
 
-[2] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás.[Modeling and Decoupling the GPU Power Consumption for Cross-Domain DVFS](https://ieeexplore.ieee.org/abstract/document/8716300/).  IEEE Transactions on Parallel and Distributed Systems (TPDS), 2019.
+[2] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. [Modeling and Decoupling the GPU Power Consumption for Cross-Domain DVFS](https://ieeexplore.ieee.org/abstract/document/8716300/).  IEEE Transactions on Parallel and Distributed Systems (TPDS), 2019.
 
 [3] [NVIDIA. NVML API Reference Guide, vR384, 2017](http://docs.nvidia.com/deploy/pdf/NVML_API_Reference_Guide.pdf)
 
