@@ -4,19 +4,19 @@
 ## 1. Description
 
 ``gpmTOOL`` is a command line tool for modelling the power consumption of
-a GPU device. The tool implements the iterative heuristic algorithm proposed in [1](https://github.com/hpc-ulisboa/gpupowermodel#4-references) and [2](https://github.com/hpc-ulisboa/gpupowermodel#4-references), initially presented in [HPCA'2018](https://youtu.be/ppsPx6zaC0U), to determine the unknown characteristics of GPU devices in order to estimate the GPU power consumption across an ample range of frequency and voltage configurations for the multiple GPU frequency domains.
+a GPU device. The tool implements the iterative heuristic algorithm proposed in [[1]](#references) and [[2]](#references), initially presented in [HPCA'2018](https://youtu.be/ppsPx6zaC0U), to determine the unknown characteristics of GPU devices in order to estimate the GPU power consumption across an ample range of frequency and voltage configurations for the multiple GPU frequency domains.
 
 By providing an input file with details of the execution of different applications on a specific GPU device, the tool is able to model the characteristics of the different architecture components. The tool can also estimate how the cores voltage scales with their frequency. From the resulting model it is possible to estimate the power consumption of any new application for different frequency configurations, by providing the utilization of the modelled GPU components.
 
 To get more information of how to install or use it, you should keep reading this file.
 
-If you use the ``gpmTOOL`` tool in a publication, please cite [1](https://github.com/hpc-ulisboa/gpupowermodel#4-references) and [2](https://github.com/hpc-ulisboa/gpupowermodel#4-references).
+If you use the ``gpmTOOL`` tool in a publication, please cite [[1]](#references) and [[2]](#references).
 
 ## 2. Differences to v1.0
 
 * New microbenchmark suite.
 * Different iterative algorithm to estimate the parameters and core and memory voltages.
-* Please refer to the paper [2](https://github.com/hpc-ulisboa/gpupowermodel#4-references) for further details on how the new model can be utilized, namely using Scaling-Factors for better accuracy, or for exporting an estimated model to a different GPU device.
+* Please refer to the paper [[2]](#references) for further details on how the new model can be utilized, namely using Scaling-Factors for better accuracy, or for exporting an estimated model to a different GPU device.
 
 ## 3. Contact
 
@@ -46,14 +46,14 @@ gpmTOOL -u
 
 ## 5. Input Files
 
-As proposed in [1](https://github.com/hpc-ulisboa/gpupowermodel#4-references), in order to estimate the power consumption model of a GPU device, i.e., to estimate the power consumption model, it is required to have information on the execution of different applications (eg. microbenchmarks) on the considered GPU device. During the execution of these applications, it is necessary to obtain both the power consumption at each tested frequency configuration, as well as the utilization of the different GPU components to be modeled (please see [5. Power Information](#5-power-information) and
-[6. GPU Components Utilization](#6-gpu-components-utilization) for more details on how to obtain these values).
+As proposed in [[1]](#references), in order to estimate the power consumption model of a GPU device, i.e., to estimate the power consumption model, it is required to have information on the execution of different applications (eg. microbenchmarks) on the considered GPU device. During the execution of these applications, it is necessary to obtain both the power consumption at each tested frequency configuration, as well as the utilization of the different GPU components to be modeled (please see [5. Power Information](#6-power-information) and
+[6. GPU Components Utilization](#7-gpu-components-utilization) for more details on how to obtain these values).
 
-Once these values are measured, they can be aggregated in a file ([4.1. Training File](#41-training-file)), which can then be provided to the ``gpmTOOL`` in order to estimate the GPU power consumption model.
+Once these values are measured, they can be aggregated in a file ([4.1. Training File](#51-training-file)), which can then be provided to the ``gpmTOOL`` in order to estimate the GPU power consumption model.
 
-FOR CASES WHEN THE NUMBER OF FREQUENCY DOMAINS IS EQUAL TO 2, if desired, once the model is estimated it is possible to save the determined values into an output file ([4.2. Model File](#42-model-file)), which will contain both the estimated model parameters as well as the determined voltage values associated with each Frequency configuration.
+FOR CASES WHEN THE NUMBER OF FREQUENCY DOMAINS IS EQUAL TO 2, if desired, once the model is estimated it is possible to save the determined values into an output file ([4.2. Model File](#52-model-file)), which will contain both the estimated model parameters as well as the determined voltage values associated with each Frequency configuration.
 
-Finally, it is also possible to use a previously estimated model to predict the power consumption of new (unseen) applications (ALSO REQUIRES NUMBER OF FREQUENCY DOMAINS EQUAL TO 2). For this, the tool must be provided both the previously created model file, as well as a file with the GPU components utilization for each of the desired GPU applications ([4.3. Predictions File](#43-predictions-file)).
+Finally, it is also possible to use a previously estimated model to predict the power consumption of new (unseen) applications (ALSO REQUIRES NUMBER OF FREQUENCY DOMAINS EQUAL TO 2). For this, the tool must be provided both the previously created model file, as well as a file with the GPU components utilization for each of the desired GPU applications ([4.3. Predictions File](#53-predictions-file)).
 
 All files are in .csv format, i.e. in each line the different values are separated by commas.
 
@@ -184,17 +184,17 @@ Again in this particular case (GTX Titan X) we have:
 
 ## 6. Power Information
 
-In NVIDIA GPU devices power samples can be obtained using the nvmlDeviceGetPowerUsage() function from the NVIDIA NVML library [3](https://github.com/hpc-ulisboa/gpupowermodel#4-references), which retrieves information from the Power sensor contained in some NVIDIA GPU devices.
+In NVIDIA GPU devices power samples can be obtained using the nvmlDeviceGetPowerUsage() function from the NVIDIA NVML library [[3]](#references), which retrieves information from the Power sensor contained in some NVIDIA GPU devices.
 
-We also provide a tool that uses this library to measure the power consumption of GPU applications [4](https://github.com/hpc-ulisboa/gpupowermodel#4-references).
+We also provide a tool that uses this library to measure the power consumption of GPU applications [[4]](#references).
 
 ## 7. GPU Components Utilization
 
-In NVIDIA GPU devices, performance counters can be obtained during kernels execution using the CUPTI library [5](https://github.com/hpc-ulisboa/gpupowermodel#4-references). Please see [1](https://github.com/hpc-ulisboa/gpupowermodel#4-references) for more details on what counter values should be measured and how to compute the corresponding component utilizations.
+In NVIDIA GPU devices, performance counters can be obtained during kernels execution using the CUPTI library [[5]](#references). Please see [[1]](#references) for more details on what counter values should be measured and how to compute the corresponding component utilizations.
 
 ## 8. Example
 
-In the example_files/ are provided examples of the input files (training, model and prediction), which correspond to the values presented in [1](https://github.com/hpc-ulisboa/gpupowermodel#4-references) for the NVIDIA GTX Titan X GPU. To estimate the power consumption model for this GPU and save it in a file called model_gtxtitanx.csv, use the following command:
+In the example_files/ are provided examples of the input files (training, model and prediction), which correspond to the values presented in [[1]](#references) for the NVIDIA GTX Titan X GPU. To estimate the power consumption model for this GPU and save it in a file called model_gtxtitanx.csv, use the following command:
 
 ``./gpmTOOL -t example_files/micro_gtxtitanx.csv -o model_gtxtitanx.csv``
 
