@@ -19,7 +19,7 @@ If you have problems, questions, ideas or suggestions, please contact us by e-ma
 ## 3. VERSIONS
 
 * [Version 1.0](https://github.com/hpc-ulisboa/gpupowermodel/tree/master/v1.0_HPCA2018), originally released in January 2018 alongside the work in [1].
-* [Version 2.0](https://github.com/hpc-ulisboa/gpupowermodel/tree/master/v2.0), released in May 2019, alongside the work in [2]. Major changes:
+* [Version 2.0](https://github.com/hpc-ulisboa/gpupowermodel/tree/master/v2.0_TPDS2019), released in May 2019, alongside the work in [2]. Major changes:
     * New microbenchmark suite.
     * Different iterative algorithm to estimate the parameters and core and memory voltages.
 

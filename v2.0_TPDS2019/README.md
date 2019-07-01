@@ -12,11 +12,16 @@ To get more information of how to install or use it, you should keep reading thi
 
 If you use the ``gpmTOOL`` tool in a publication, please cite [1] and [2].
 
-## 2. Contact
+## 2. Differences to v1.0
+    * New microbenchmark suite.
+    * Different iterative algorithm to estimate the parameters and core and memory voltages.
+    * Please refer to the paper [2] for further details on how the new model can be utilized, namely using Scaling-Factors for better accuracy, or for exporting an estimated model to a different GPU device.
+
+## 3. Contact
 
 If you have problems, questions, ideas or suggestions, please contact us by e-mail at joao.guerreiro@inesc-id.pt.
 
-## 3. Usage
+## 4. Usage
 
 * Usage:
 ```
@@ -38,7 +43,7 @@ gpmTOOL -u
 
     ``-u`` : shows 'Usage' section of this file
 
-## 4. Input Files
+## 5. Input Files
 
 As proposed in [1], in order to estimate the power consumption model of a GPU device, i.e., to estimate the power consumption model, it is required to have information on the execution of different applications (eg. microbenchmarks) on the considered GPU device. During the execution of these applications, it is necessary to obtain both the power consumption at each tested frequency configuration, as well as the utilization of the different GPU components to be modeled (please see [5. Power Information](#5-power-information) and
 [6. GPU Components Utilization](#6-gpu-components-utilization) for more details on how to obtain these values).
@@ -51,7 +56,7 @@ Finally, it is also possible to use a previously estimated model to predict the 
 
 All files are in .csv format, i.e. in each line the different values are separated by commas.
 
-### 4.1. Training File
+### 5.1. Training File
 
 The training_file.csv must contain, at the beginning of the file, information relative to the GPU device, which will determine the basic structure of the model to be estimated (number_freq_domains, list_default_freqs, list_components). Afterwards, the file will
 contain one line for each measurement to be used in the model estimation.
@@ -94,7 +99,7 @@ Considering the NVIDIA GTX Titan X used in [1], an example of the training_file.
 * Uc10 = Util_shared_mem
 * Um0 = Util_DRAM
 
-### 4.2. Model File
+### 5.2. Model File
 ##### (REQUIRES: number_freq_domains=2)
 
 The model_file.csv must also contain, at the beginning of the file, information relative to the GPU device, which will determine the basic structure of the model to be estimated (number_freq_domains, list_default_freqs, list_components). Then the file will have the
@@ -128,7 +133,7 @@ Considering the NVIDIA GTX Titan X used in [1], an example of the model_file.csv
     line  8: 0.90501225,0.9050168,1.0,1.0993801                                                -> 16 voltage values for each core frequency
     line  9: 0.5,1.0,1.0,1.0                                                                   -> 4 voltage values for each memory frequency
 
-### 4.3. Predictions File
+### 5.3. Predictions File
 ##### (REQUIRES: number_freq_domains=2)
 
 The predictions_file.csv must also contain, at the beginning of the file, information relative to the GPU device, which will determine the basic structure of the model to be estimated (number_freq_domains, list_default_freqs, list_components). Then, each following line will have the GPU component utilizations for a different application (measured at the default frequency configuration).
@@ -176,17 +181,17 @@ Again in this particular case (GTX Titan X) we have:
 * Uc10 = Util_shared_mem
 * Um0 = Util_DRAM
 
-## 5. Power Information
+## 6. Power Information
 
 In NVIDIA GPU devices power samples can be obtained using the nvmlDeviceGetPowerUsage() function from the NVIDIA NVML library [3], which retrieves information from the Power sensor contained in some NVIDIA GPU devices.
 
 We also provide a tool that uses this library to measure the power consumption of GPU applications [4].
 
-## 6. GPU Components Utilization
+## 7. GPU Components Utilization
 
 In NVIDIA GPU devices, performance counters can be obtained during kernels execution using the CUPTI library [5]. Please see [1] for more details on what counter values should be measured and how to compute the corresponding component utilizations.
 
-## 7. Example
+## 8. Example
 
 In the example_files/ are provided examples of the input files (training, model and prediction), which correspond to the values presented in [1] for the NVIDIA GTX Titan X GPU. To estimate the power consumption model for this GPU and save it in a file called model_gtxtitanx.csv, use the following command:
 
