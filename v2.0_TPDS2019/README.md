@@ -46,14 +46,14 @@ gpmTOOL -u
 
 ## 5. Input Files
 
-As proposed in [[1]](#references), in order to estimate the power consumption model of a GPU device, i.e., to estimate the power consumption model, it is required to have information on the execution of different applications (eg. microbenchmarks) on the considered GPU device. During the execution of these applications, it is necessary to obtain both the power consumption at each tested frequency configuration, as well as the utilization of the different GPU components to be modeled (please see [5. Power Information](#6-power-information) and
-[6. GPU Components Utilization](#7-gpu-components-utilization) for more details on how to obtain these values).
+As proposed in [[1]](#references), in order to estimate the power consumption model of a GPU device, i.e., to estimate the power consumption model, it is required to have information on the execution of different applications (eg. microbenchmarks) on the considered GPU device. During the execution of these applications, it is necessary to obtain both the power consumption at each tested frequency configuration, as well as the utilization of the different GPU components to be modeled (please see [6. Power Information](#6-power-information) and
+[7. GPU Components Utilization](#7-gpu-components-utilization) for more details on how to obtain these values).
 
-Once these values are measured, they can be aggregated in a file ([4.1. Training File](#51-training-file)), which can then be provided to the ``gpmTOOL`` in order to estimate the GPU power consumption model.
+Once these values are measured, they can be aggregated in a file ([5.1. Training File](#51-training-file)), which can then be provided to the ``gpmTOOL`` in order to estimate the GPU power consumption model.
 
-FOR CASES WHEN THE NUMBER OF FREQUENCY DOMAINS IS EQUAL TO 2, if desired, once the model is estimated it is possible to save the determined values into an output file ([4.2. Model File](#52-model-file)), which will contain both the estimated model parameters as well as the determined voltage values associated with each Frequency configuration.
+FOR CASES WHEN THE NUMBER OF FREQUENCY DOMAINS IS EQUAL TO 2, if desired, once the model is estimated it is possible to save the determined values into an output file ([5.2. Model File](#52-model-file)), which will contain both the estimated model parameters as well as the determined voltage values associated with each Frequency configuration.
 
-Finally, it is also possible to use a previously estimated model to predict the power consumption of new (unseen) applications (ALSO REQUIRES NUMBER OF FREQUENCY DOMAINS EQUAL TO 2). For this, the tool must be provided both the previously created model file, as well as a file with the GPU components utilization for each of the desired GPU applications ([4.3. Predictions File](#53-predictions-file)).
+Finally, it is also possible to use a previously estimated model to predict the power consumption of new (unseen) applications (ALSO REQUIRES NUMBER OF FREQUENCY DOMAINS EQUAL TO 2). For this, the tool must be provided both the previously created model file, as well as a file with the GPU components utilization for each of the desired GPU applications ([5.3. Predictions File](#53-predictions-file)).
 
 All files are in .csv format, i.e. in each line the different values are separated by commas.
 
