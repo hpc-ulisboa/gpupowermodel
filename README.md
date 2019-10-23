@@ -1,5 +1,7 @@
 # gpmTOOL - GPU Power Modelling Tool
 
+![Model](https://github.com/hpc-ulisboa/gpupowermodel/tree/master/model_diagram.pdf)
+
 ## 1. DESCRIPTION
 
 ``gpmTOOL`` is a command line tool for modelling the power consumption of a GPU device. The tool implements the iterative heuristic algorithm proposed in [[1]](#references) and [[2]](#references), initially presented in [HPCA'2018](https://youtu.be/ppsPx6zaC0U), to determine the unknown characteristics of GPU devices in order to estimate the GPU power consumption across an ample range of frequency and voltage configurations for the multiple GPU frequency domains.
