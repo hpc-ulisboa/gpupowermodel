@@ -17,7 +17,7 @@ If you have problems, questions, ideas or suggestions, please contact us by e-ma
 
 * Usage:
 
-  ```
+  ```bash
   gpmTOOL -t training_file.csv [-o model_file.csv] [-v]
   gpmTOOL -p model_file.csv predictions_file.csv [-v]
   gpmTOOL -u
@@ -25,7 +25,7 @@ If you have problems, questions, ideas or suggestions, please contact us by e-ma
 
 * Options:
 
-    ``-t`` : file with the measurements data points used to estimate the model parameters (eg. from microbenchmarks).
+    `` -t `` : file with the measurements data points used to estimate the model parameters (eg. from microbenchmarks).
 
     ``-o`` : if provided, the determined model parameters and voltage values are saved in an output file model_file.csv. ONLY SUPPORTED WHEN NUMBER OF FREQUENCY DOMAINS IS 2.
 
@@ -177,11 +177,15 @@ In NVIDIA GPU devices, performance counters can be obtained during kernels execu
 
 In the example_files/ are provided examples of the input files (training, model and prediction), which correspond to the values presented in [1] for the NVIDIA GTX Titan X GPU. To estimate the power consumption model for this GPU and save it in a file called model_maxwell.csv, use the following command:
 
-``./gpmTOOL -t example_files/micro_maxwell.csv -o model_maxwell.csv``
+```bash
+./gpmTOOL -t example_files/micro_maxwell.csv -o model_maxwell.csv
+```
 
 To use the estimated model to predict the power consumptions of the real benchmarks applications considered in the file real_maxwell.csv, use the following command:
 
-``./gpmTOOL -p model_maxwell.csv example_files/real_maxwell.csv``
+```bash
+./gpmTOOL -p model_maxwell.csv example_files/real_maxwell.csv
+```
 
 ## References
 
