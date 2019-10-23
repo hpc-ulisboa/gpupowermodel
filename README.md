@@ -1,6 +1,6 @@
 # gpmTOOL - GPU Power Modelling Tool
 
-![Model](https://github.com/hpc-ulisboa/gpupowermodel/tree/master/model_diagram.png)
+<p align="center"><img width="100%" src="png/model_diagram.png" /></p>
 
 ## 1. DESCRIPTION
 
