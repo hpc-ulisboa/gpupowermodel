@@ -11,27 +11,29 @@ By providing an input file with details of the execution of different applicatio
 To get more information of how to install or use it, you should keep reading this file.
 
 If you use the ``gpmTOOL`` tool in a publication, please cite [[1]](#references) and [[2]](#references).
-
 <br/>
 
-## 2. CONTACT
-
-If you have problems, questions, ideas or suggestions, please contact us by e-mail at joao.guerreiro@inesc-id.pt .
-
-## 3. VERSIONS
+## 2. VERSIONS
 
 * [Version 1.0](https://github.com/hpc-ulisboa/gpupowermodel/tree/master/v1.0_HPCA2018), originally released in January 2018 alongside the work in [[1]](#references).
 * [Version 2.0](https://github.com/hpc-ulisboa/gpupowermodel/tree/master/v2.0_TPDS2019), released in May 2019, alongside the work in [[2]](#references). Major changes:
     * New microbenchmark suite.
     * Different iterative algorithm to estimate the parameters and core and memory voltages.
 
-## REFERENCES
+## 3. REFERENCES
 
 [1] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. [GPGPU Power Modelling for Multi-Domain Voltage-Frequency Scaling](https://ieeexplore.ieee.org/abstract/document/8327055). 24th IEEE International Symposium on High-Performance Computing Architecture (HPCA), 2018.
 
 [2] João Guerreiro, Aleksandar Ilic, Nuno Roma, Pedro Tomás. [Modeling and Decoupling the GPU Power Consumption for Cross-Domain DVFS](https://ieeexplore.ieee.org/abstract/document/8716300/).  IEEE Transactions on Parallel and Distributed Systems (TPDS), 2019.
 
 <br/>
+
+## CONTACT
+
+If you have problems, questions, ideas or suggestions, please contact us by e-mail at joao.guerreiro@inesc-id.pt .
+
+
+
 
 ## Author
 João Guerreiro/ [@joaofilipedg](https://github.com/joaofilipedg)
